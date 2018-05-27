@@ -11,7 +11,8 @@ Set `INTERNETX_USERNAME` and `INTERNETX_PASSWORD` in the `.env` or publish the c
 ### Domains
 
 ``` php
-Internetx::domains()->where('name', '=', '*.com')->get();
+Internetx::domains()->where('name', 'LIKE', '*.com')->get();
+Internetx::domains()->where('name', '=', 'example.com')->first();
 ```
 
 
