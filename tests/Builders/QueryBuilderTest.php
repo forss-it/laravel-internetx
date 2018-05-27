@@ -42,6 +42,22 @@ class QueryBuilderTest extends TestCase {
 	}
 
 	/** @test */
+	public function it_can_orderBy_key(){
+		$builder = new QueryBuilder();
+		$builder->orderBy('key', 'asc');
+		$this->assertEquals($builder->orderKey, 'key');
+		$this->assertEquals($builder->orderDirection, 'asc');
+	}
+
+	/** @test */
+	public function it_can_add_keys(){
+		$builder = new QueryBuilder();
+		$builder->keys(['test']);
+		$this->assertEquals($builder->keys, ['test']);
+
+	}
+
+	/** @test */
 	public function it_can_query_with_orwhere(){
 		$builder = new QueryBuilder();
 		$builder->orWhere('test', '=', 'value');
