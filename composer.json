@@ -1,0 +1,44 @@
+{
+    "name": "dialect-katrineholm/larvel-internetx",
+    "type": "library",
+    "description": "Internetx API wrapper for laravel",
+    "keywords": [
+        "dialect",
+        "dialect-katrineholm",
+        "internetx",
+        "api"
+    ],
+    "homepage": "https://github.com/dialect-katrineholm/laravel-internetx",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dialect Katrineholm",
+            "email": "katrineholm@dialect.se",
+            "homepage": "https://github.com/dialect-katrineholm",
+            "role": "Developer"
+        }
+    ],
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dialect\\Internetx\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dialect\\Internetx\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dialect\\Internetx\\InternetxServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
