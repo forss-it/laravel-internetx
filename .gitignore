@@ -1,0 +1,5 @@
+.idea/*
+.editorconfig
+.DS_Store
+vendor/*
+
