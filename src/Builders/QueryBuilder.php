@@ -6,6 +6,9 @@ class QueryBuilder extends Builder {
 	public $offset = 0;
 	public $children = 0;
 	public $queries = [];
+	public $keys = [];
+	public $orderKey = null;
+	public $orderDirection = null;
 	protected $operators = [
 		"=" => "EQ",
 		"!=" => "NE",
@@ -34,6 +37,13 @@ class QueryBuilder extends Builder {
 
 	public function children($children){
 		$this->children = $children;
+		return $this;
+	}
+
+	public function keys($keys){
+		if(!is_array($keys)) $this->keys = [$keys];
+		else $this->keys = $keys;
+
 		return $this;
 	}
 
@@ -75,9 +85,17 @@ class QueryBuilder extends Builder {
 		return $this;
 	}
 
+	public function orderBy($key, $direction = 'asc'){
+		$this->orderKey = $key;
+		$this->orderDirection = $direction;
+
+		return $this;
+	}
+
 
 	public function toXml(){
 		$views = [];
+		$order = null;
 		if($this->limit){
 			$views[] = [ 'key' => 'limit', 'value' => $this->limit];
 		}
@@ -88,10 +106,27 @@ class QueryBuilder extends Builder {
 			$views[] = [ 'key' => 'children', 'value' => $this->children];
 		}
 
-		$this->tasks = [
-			['key' => 'view', 'value' => $views],
-			['key' => 'where', 'value' => $this->queries],
-		];
+		if(is_array($this->keys) && count($this->keys)){
+
+			foreach($this->keys as $key){
+				$this->tasks[] = [
+					'key' => 'key',
+					'value' => $key
+				];
+			}
+		}
+
+		$this->tasks[] = ['key' => 'view', 'value' => $views];
+		$this->tasks[] = ['key' => 'where', 'value' => $this->queries];
+
+
+		if($this->orderKey){
+			$this->tasks[] = [ 'key' => 'order', 'value' => [
+				['key' => 'key', 'value' => $this->orderKey],
+				['key' => 'mode', 'value' => $this->orderDirection],
+			]];
+		}
+
 
 		return Parent::toXml();
 	}

@@ -15,8 +15,6 @@ class Builder {
 
 	public $tasks = [];
 
-	protected $operations = [];
-
 	public function __construct($code = '0') {
 		$this->username = config('internetx.auth.username');
 		$this->password = config('internetx.auth.password');
@@ -66,7 +64,7 @@ class Builder {
 	protected function addNodeValues($dom, &$node, $array){
 
 		foreach($array as  $fields){
-			if(!array_key_exists('key', $fields)) dd($fields);
+			if(!array_key_exists('key', $fields)) dd($array, $fields);
 			$element = $dom->createElement($fields['key']);
 			if(is_array($fields['value'])){
 				$this->addNodeValues($dom, $element, $fields['value']);
