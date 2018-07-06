@@ -23,8 +23,8 @@ class QueryBuilder extends Builder {
 
 	public function __construct($code = '0') {
 		parent::__construct($code);
-
 	}
+
 
 	public function limit($limit){
 		$this->limit = $limit;

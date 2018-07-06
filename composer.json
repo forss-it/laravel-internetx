@@ -1,11 +1,13 @@
 {
-    "name": "dialect-katrineholm/larvel-internetx",
+    "name": "dialect-katrineholm/laravel-internetx",
     "type": "library",
     "description": "Internetx API wrapper for laravel",
     "keywords": [
         "dialect",
         "dialect-katrineholm",
         "internetx",
+        "laravel",
+        "php",
         "api"
     ],
     "homepage": "https://github.com/dialect-katrineholm/laravel-internetx",
