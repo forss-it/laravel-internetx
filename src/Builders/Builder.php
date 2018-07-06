@@ -19,6 +19,7 @@ class Builder {
 		$this->username = config('internetx.auth.username');
 		$this->password = config('internetx.auth.password');
 		$this->code = $code;
+
 	}
 
 	public function auth($username, $password){
