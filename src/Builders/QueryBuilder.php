@@ -22,7 +22,8 @@ class QueryBuilder extends Builder {
 	protected $operations = [];
 
 	public function __construct($code = '0') {
-		$this->code = $code;
+		parent::__construct($code);
+
 	}
 
 	public function limit($limit){
