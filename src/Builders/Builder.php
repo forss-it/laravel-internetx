@@ -92,7 +92,11 @@ class Builder {
 			throw new InternetxException('Could not connect to: ' .$this->url);
 		}
 		else if($result->result->status->type == 'error'){
-			throw new InternetxException($result->result->status->code.': '.$result->result->status->text);
+		    if(property_exists($result->result, 'msg')) {
+                throw new InternetxException($result->result->msg->code.': '.$result->result->msg->text);
+            } else {
+                throw new InternetxException($result->result->status->code.': '.$result->result->status->text);
+            }
 		}
 		return $this->parseQueryResultToModels($result);
 	}
