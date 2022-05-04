@@ -36,6 +36,11 @@ class QueryBuilder extends Builder {
 		return $this;
 	}
 
+    public function page($page) {
+        $this->offset = $page * $this->limit;
+        return $this;
+    }
+
 	public function children($children){
 		$this->children = $children;
 		return $this;

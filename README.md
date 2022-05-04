@@ -15,4 +15,8 @@ Internetx::domains()->where('name', 'LIKE', '*.com')->get();
 Internetx::domains()->where('name', '=', 'example.com')->first();
 ```
 
+### Documentation
+
+https://help.internetx.com/display/APIXMLEN/XML+API+Basics
+
 
