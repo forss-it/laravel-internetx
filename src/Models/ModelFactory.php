@@ -7,7 +7,7 @@ class ModelFactory {
 	];
 	public static function create($name, $data){
 		$name = strtolower($name);
-		foreach(Self::$models as $model){
+		foreach(self::$models as $model){
 
 			if($model::$_identifier == $name){
 				return new $model($data);

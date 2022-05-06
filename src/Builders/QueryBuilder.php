@@ -1,6 +1,8 @@
 <?php
 namespace Dialect\Internetx\Builders;
 
+use Dialect\Internetx\Internetx;
+
 class QueryBuilder extends Builder {
 	public $limit = 0;
 	public $offset = 0;
@@ -19,12 +21,9 @@ class QueryBuilder extends Builder {
 		"<=" => "LE",
 	];
 
-	protected $operations = [];
-
 	public function __construct($code = '0') {
 		parent::__construct($code);
 	}
-
 
 	public function limit($limit){
 		$this->limit = $limit;
@@ -98,10 +97,8 @@ class QueryBuilder extends Builder {
 		return $this;
 	}
 
-
 	public function toXml(){
 		$views = [];
-		$order = null;
 		if($this->limit){
 			$views[] = [ 'key' => 'limit', 'value' => $this->limit];
 		}
@@ -113,7 +110,6 @@ class QueryBuilder extends Builder {
 		}
 
 		if(is_array($this->keys) && count($this->keys)){
-
 			foreach($this->keys as $key){
 				$this->tasks[] = [
 					'key' => 'key',
@@ -122,27 +118,42 @@ class QueryBuilder extends Builder {
 			}
 		}
 
-		$this->tasks[] = ['key' => 'view', 'value' => $views];
-		$this->tasks[] = ['key' => 'where', 'value' => $this->queries];
-
+        if(!empty($views)) {
+            $this->tasks[] = ['key' => 'view', 'value' => $views];
+        }
+        if(!empty($queries)) {
+            $this->tasks[] = ['key' => 'where', 'value' => $this->queries];
+        }
 
 		if($this->orderKey){
-			$this->tasks[] = [ 'key' => 'order', 'value' => [
-				['key' => 'key', 'value' => $this->orderKey],
-				['key' => 'mode', 'value' => $this->orderDirection],
-			]];
+			$this->tasks[] = [
+                'key' => 'order',
+                'value' => [
+				    ['key' => 'key', 'value' => $this->orderKey],
+				    ['key' => 'mode', 'value' => $this->orderDirection],
+			    ]
+            ];
 		}
-
 
 		return Parent::toXml();
 	}
 
 	public function get(){
-		return $this->sendQuery();
+        try {
+            return $this->sendQuery();
+        } catch(\Exception $e) {
+            Internetx::setErrorMessage($e->getMessage());
+            return null;
+        }
 	}
 
 	public function first(){
-		return $this->sendQuery()[0];
+        try {
+    		return $this->sendQuery()[0];
+        } catch(\Exception $e) {
+            Internetx::setErrorMessage($e->getMessage());
+            return null;
+        }
 	}
 
 

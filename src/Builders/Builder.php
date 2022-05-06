@@ -54,8 +54,8 @@ class Builder {
 		//task
 		$task = $dom->createElement("task");
 		$code =  $dom->createElement("code", $this->code);
-
 		$task->appendChild($code);
+
 		$this->addNodeValues($dom, $task, $this->tasks);
 		$dom->documentElement->appendChild($task);
 
@@ -63,16 +63,16 @@ class Builder {
 	}
 
 	protected function addNodeValues($dom, &$node, $array){
-
-		foreach($array as  $fields){
-			if(!array_key_exists('key', $fields)) dd($array, $fields);
-			$element = $dom->createElement($fields['key']);
-			if(is_array($fields['value'])){
-				$this->addNodeValues($dom, $element, $fields['value']);
-			}
-			else{
-				$element->nodeValue = $fields['value'];
-			}
+		foreach($array as $fields){
+			if(!array_key_exists('key', $fields)) {
+                return;
+            }
+            $element = $dom->createElement($fields['key']);
+            if (is_array($fields['value'])) {
+                $this->addNodeValues($dom, $element, $fields['value']);
+            } else {
+                $element->nodeValue = $fields['value'];
+            }
 			$node->appendChild($element);
 		}
 	}
